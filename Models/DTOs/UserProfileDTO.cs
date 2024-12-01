@@ -16,6 +16,15 @@ public class UserProfileDTO
 
     public string IdentityUserId { get; set; }
 
-    public IdentityUser IdentityUser { get; set; }
+    public List<ChoreDTO> Chores { get; set; }
+    public List<ChoreCompletionDTO> ChoreCompletions {get; set;}
 
+}
+
+public class UserProfileForChoresDTO
+{
+    public int Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Address { get; set; }
 }

@@ -10,6 +10,9 @@ public class HouseRulesDbContext : IdentityDbContext<IdentityUser>
     
     public DbSet<UserProfile> UserProfiles { get; set; }
 
+    public DbSet<Chore> Chores { get; set; }
+    public DbSet<ChoreCompletion> ChoreCompletions { get; set; }
+
     public HouseRulesDbContext(DbContextOptions<HouseRulesDbContext> context, IConfiguration config) : base(context)
     {
         _configuration = config;
@@ -46,7 +49,73 @@ public class HouseRulesDbContext : IdentityDbContext<IdentityUser>
             FirstName = "Admina",
             LastName = "Strator",
             Address = "101 Main Street",
+            
         });
+
+        modelBuilder.Entity<Chore>().HasData(new Chore[]
+        {
+            new Chore
+            {
+                Id = 1,
+                Name = "Vacuum the house",
+                Difficulty = 3,
+                ChoreFrequencyDays = 7
+            },
+            new Chore
+            {
+                Id = 2,
+                Name = "Wash the dishes",
+                Difficulty = 2,
+                ChoreFrequencyDays = 1
+            },
+            new Chore
+            {
+                Id = 3,
+                Name = "Mow the lawn",
+                Difficulty = 4,
+                ChoreFrequencyDays = 14
+            },
+            new Chore
+            {
+                Id = 4,
+                Name = "Clean the bathroom",
+                Difficulty = 5,
+                ChoreFrequencyDays = 10
+            },
+            new Chore
+            {
+                Id = 5,
+                Name = "Take out the trash",
+                Difficulty = 1,
+                ChoreFrequencyDays = 2
+            }
+        });
+
+        modelBuilder.Entity<ChoreCompletion>().HasData(new ChoreCompletion[]
+        {
+            new ChoreCompletion
+            {
+                Id = 1,
+                UserProfileId = 1, // Assuming the only user has ID 1
+                ChoreId = 2,       // Reference to the "Wash the dishes" chore
+                CompletedOn = DateTime.Now.AddDays(-1) // Completed yesterday
+            },
+            new ChoreCompletion
+            {
+                Id = 2,
+                UserProfileId = 1, // Same user
+                ChoreId = 4,       // Reference to the "Clean the bathroom" chore
+                CompletedOn = DateTime.Now // Completed today
+            }
+        });
+
+        modelBuilder.Entity<UserProfile>()
+            .HasMany(up => up.Chores)
+            .WithMany(s => s.UserProfiles)
+            .UsingEntity(j => j.HasData(
+                new { UserProfilesId = 1, ChoresId = 1 },
+                new { UserProfilesId = 1, ChoresId = 3 }
+            ));
 
         
     }

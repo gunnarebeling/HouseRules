@@ -96,7 +96,7 @@ public class UserProfileController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    // [Authorize]
+    [Authorize]
     public IActionResult getUserDetails(string id) 
     {
     

@@ -18,7 +18,7 @@ export const CreateChore = () => {
 
     const validationSchema = Yup.object().shape({
         name : Yup.string().required("Name is required"),
-        difficulty: Yup.number().integer("Must be an Integer").required("must enter a difficulty").min(1, "must be more than 0"),
+        difficulty: Yup.number().integer("Must be an Integer").required("must enter a difficulty").min(1, "must be between 1-5").max(5, "must be between 1-5"),
         choreFrequencyDays: Yup.number().integer("Must be an Integer").required("must enter a frequency").min(1, "must be more than 0")
         
     })
@@ -59,9 +59,9 @@ export const CreateChore = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container ">
             <div>
-                <h4>create Chore</h4>
+                <h4>Create Chore</h4>
             </div>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>

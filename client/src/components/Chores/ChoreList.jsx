@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
 import { Table } from "reactstrap"
-import { DeleteChore, getAllChores } from "../../managers/choresManager"
-import { Link } from "react-router-dom"
+import { completeChore, DeleteChore, getAllChores } from "../../managers/choresManager"
+import { Link, useNavigate } from "react-router-dom"
 
 
 
 export const ChoreList = ({loggedInUser}) => {
     const [chores, setChores] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         getAllChores().then(setChores)
@@ -17,6 +18,15 @@ export const ChoreList = ({loggedInUser}) => {
         const id = parseInt(e.target.dataset.id)
         DeleteChore(id).then(() => {
             getAllChores().then(setChores)
+        })
+    }
+
+    const handleComplete = (e) => {
+        const id = parseInt(e.target.dataset.id)
+        const userId = loggedInUser.id
+        
+        completeChore(id,userId ).then(() => {
+            navigate(`${id}`)
         })
     }
 
@@ -34,10 +44,11 @@ export const ChoreList = ({loggedInUser}) => {
                 <tr>
                     <th>Name</th>
                     <th>Difficulty</th>
-                    <th>Chore Frequency Days</th>
+                    <th>Frequency</th>
                     {loggedInUser.roles.includes("Admin") && 
                         <th>Details</th>
                     }
+                    <th>Complete</th>
                     {loggedInUser.roles.includes("Admin") && 
                         <th>Delete</th>
                     }
@@ -57,6 +68,9 @@ export const ChoreList = ({loggedInUser}) => {
                                     <Link to={`${c.id}`}>Details</Link>
                                 </td>
                             }
+                            <td>
+                                <button data-id={c.id} className="btn btn-warning m-2" onClick={handleComplete} >Complete</button>
+                            </td>
                             {loggedInUser.roles.includes("Admin") && 
                                 <td>
                                     <button data-id={c.id} className="btn btn-danger m-2" onClick={handleDelete} >Delete</button>

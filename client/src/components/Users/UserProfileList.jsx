@@ -8,7 +8,7 @@ export const UserProfileList = () => {
 
     useEffect(() => {
         getAllUsers().then(setUserProfiles)
-    })
+    }, [])
     return (
         <div className="container">
         <div className="sub-menu bg-light px-1">

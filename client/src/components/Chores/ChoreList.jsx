@@ -24,6 +24,9 @@ export const ChoreList = ({loggedInUser}) => {
         <div className="container">
         <div className="sub-menu bg-light px-1">
             <h4>Chores</h4>
+            {loggedInUser.roles.includes("Admin") && 
+                <Link to={"create"}>create new chore</Link>     
+            }
             
         </div>
         <Table>

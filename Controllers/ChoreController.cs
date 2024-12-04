@@ -62,7 +62,7 @@ public class ChoresController: ControllerBase
 
     [HttpPost]
     [Authorize(Roles="Admin")]
-    public IActionResult PostChore(SimpleChoreDTO choreObj)
+    public IActionResult PostChore( [FromBody] SimpleChoreDTO choreObj)
     {
        
          Chore chore = new Chore

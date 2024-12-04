@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore;
 namespace HouseRules.Controllers;
 [Controller]
 [Route("api/[controller]")]
-public class ChoreController: ControllerBase
+public class ChoresController: ControllerBase
 {
     private  HouseRulesDbContext _dbContext;
     private IMapper _mapper;
-    public ChoreController(HouseRulesDbContext db, IMapper mapper)
+    public ChoresController(HouseRulesDbContext db, IMapper mapper)
     {
         _dbContext = db;
         _mapper = mapper;

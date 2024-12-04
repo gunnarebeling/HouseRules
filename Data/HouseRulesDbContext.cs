@@ -49,6 +49,7 @@ public class HouseRulesDbContext : IdentityDbContext<IdentityUser>
             FirstName = "Admina",
             LastName = "Strator",
             Address = "101 Main Street",
+            Email = "admina@strator.comx"
             
         });
 

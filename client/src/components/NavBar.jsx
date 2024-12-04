@@ -35,7 +35,14 @@ return (
                     UserProfiles
                 </NavLink>
                 </NavItem>
-                )}
+            )}
+            <NavItem onClick={() => setOpen(false)}>
+            <NavLink tag={RRNavLink} to="/chores">
+                Chores
+            </NavLink>
+            </NavItem>
+            
+            
             </Nav>
             </Collapse>
         

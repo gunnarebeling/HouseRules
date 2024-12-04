@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { register } from "../../managers/authManager";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
+
 
 export default function Register({ setLoggedInUser }) {
   const [firstName, setFirstName] = useState("");
@@ -11,11 +13,13 @@ export default function Register({ setLoggedInUser }) {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState({})
 
   const [passwordMismatch, setPasswordMismatch] = useState();
   const [registrationFailure, setRegistrationFailure] = useState(false);
 
   const navigate = useNavigate();
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,11 +36,13 @@ export default function Register({ setLoggedInUser }) {
         password,
       };
       register(newUser).then((user) => {
-        if (user) {
+        if (user.errors) {
+          setErrors(user.errors)
+          setRegistrationFailure(true)
+        }
+        else {
           setLoggedInUser(user);
           navigate("/");
-        } else {
-          setRegistrationFailure(true);
         }
       });
     }
@@ -53,7 +59,9 @@ export default function Register({ setLoggedInUser }) {
           onChange={(e) => {
             setFirstName(e.target.value);
           }}
+          invalid={!!errors.FirstName}
         />
+        {errors.FirstName && <FormFeedback>{errors.FirstName.join(", ")}</FormFeedback>}
       </FormGroup>
       <FormGroup>
         <Label>Last Name</Label>
@@ -63,7 +71,9 @@ export default function Register({ setLoggedInUser }) {
           onChange={(e) => {
             setLastName(e.target.value);
           }}
+          invalid={!!errors.LastName}
         />
+        {errors.LastName && <FormFeedback>{errors.LastName.join(", ")}</FormFeedback>}
       </FormGroup>
       <FormGroup>
         <Label>Email</Label>
@@ -73,7 +83,9 @@ export default function Register({ setLoggedInUser }) {
           onChange={(e) => {
             setEmail(e.target.value);
           }}
+          invalid={!!errors.Email}
         />
+        {errors.Email && <FormFeedback>{errors.Email.join(", ")}</FormFeedback>}
       </FormGroup>
       <FormGroup>
         <Label>User Name</Label>
@@ -83,7 +95,9 @@ export default function Register({ setLoggedInUser }) {
           onChange={(e) => {
             setUserName(e.target.value);
           }}
+          invalid={!!errors.UserName}
         />
+        {errors.UserName && <FormFeedback>{errors.UserName.join(", ")}</FormFeedback>}
       </FormGroup>
       <FormGroup>
         <Label>Address</Label>
@@ -93,12 +107,14 @@ export default function Register({ setLoggedInUser }) {
           onChange={(e) => {
             setAddress(e.target.value);
           }}
+          invalid={!!errors.Address}
         />
+        {errors.Address && <FormFeedback>{errors.Address.join(", ")}</FormFeedback>}
       </FormGroup>
       <FormGroup>
         <Label>Password</Label>
         <Input
-          invalid={passwordMismatch}
+          invalid={passwordMismatch|| !!errors.Password}
           type="password"
           value={password}
           onChange={(e) => {
@@ -106,6 +122,7 @@ export default function Register({ setLoggedInUser }) {
             setPassword(e.target.value);
           }}
         />
+        {errors.Password && <FormFeedback>{errors.Password.join(", ")}</FormFeedback>}
       </FormGroup>
       <FormGroup>
         <Label> Confirm Password</Label>

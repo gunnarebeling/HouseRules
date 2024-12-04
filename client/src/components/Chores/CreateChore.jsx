@@ -90,8 +90,18 @@ export const CreateChore = () => {
                     type="number"
                     name="choreFrequencyDays"
                     value={formData.choreFrequencyDays}
-                    onChange={updateForm} 
+                    onChange={updateForm}
+                    list="defaultNumbers" 
                     invalid={!!errors.choreFrequencyDays}/>
+                    <span className="validity"></span>
+
+                    <datalist id="defaultNumbers">
+                        <option value="1"/>
+                        <option value="3"/>
+                        <option value="7"/>
+                        <option value="10"/>
+                        <option value="14"/>
+                    </datalist>
                     <FormFeedback type='invalid'>{errors.choreFrequencyDays}</FormFeedback>
                 </FormGroup>
                 <Button variant="primary" type="submit">Submit</Button>

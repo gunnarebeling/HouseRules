@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
 namespace HouseRules.Models;
@@ -8,6 +9,7 @@ public class UserProfile
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Address { get; set; }
+    [EmailAddress(ErrorMessage ="must be a valid email")]
     public string Email {get; set;}
 
     public string IdentityUserId { get; set; }

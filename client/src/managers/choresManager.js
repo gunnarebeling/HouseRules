@@ -44,3 +44,13 @@ export const unassignUsertoChore = (id, userId) => {
         
     })
 }
+
+export const updateChores = (choreObj, id) => {
+    return fetch(`${api_Url}/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: (JSON.stringify(choreObj))
+    })
+}

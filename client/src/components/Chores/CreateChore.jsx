@@ -44,10 +44,7 @@ export const CreateChore = () => {
             }
             postChores(copy).then(() => {
                 navigate("/chores")
-            })
-
-
-            
+            })    
         } catch (validationErrors) {
             const formattedErrors = validationErrors.inner.reduce((acc, err) => {
                 acc[err.path] = err.message

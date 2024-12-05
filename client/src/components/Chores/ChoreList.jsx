@@ -2,13 +2,13 @@
 import { useEffect, useState } from "react"
 import { Table } from "reactstrap"
 import { completeChore, DeleteChore, getAllChores } from "../../managers/choresManager"
-import { Link, useNavigate } from "react-router-dom"
+import { Link,  } from "react-router-dom"
 
 
 
 export const ChoreList = ({loggedInUser}) => {
     const [chores, setChores] = useState([])
-    const navigate = useNavigate()
+    
 
     useEffect(() => {
         getAllChores().then(setChores)
@@ -26,7 +26,7 @@ export const ChoreList = ({loggedInUser}) => {
         const userId = loggedInUser.id
         
         completeChore(id,userId ).then(() => {
-            navigate(`${id}`)
+            getAllChores().then(setChores)
         })
     }
 
@@ -60,7 +60,7 @@ export const ChoreList = ({loggedInUser}) => {
                 {chores.map(c => {
                     return (
                         <tr key={`appointment-${c.id}`}>
-                            <th scope="row">{c.name}</th>
+                            <th scope="row" style={c.expired ? { color: 'red' } : {}}>{c.name}</th>
                             <td>{c.difficulty}</td>
                             <td>{c.choreFrequencyDays}</td>
                             {loggedInUser.roles.includes("Admin") && 

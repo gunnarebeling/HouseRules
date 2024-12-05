@@ -82,7 +82,7 @@ public class ChoresController: ControllerBase
 
     [HttpPut("{id}")]
     [Authorize(Roles="Admin")]
-    public IActionResult updateChore(SimpleChoreDTO choreObj, string id)
+    public IActionResult updateChore([FromBody]SimpleChoreDTO choreObj, string id)
     {
         Chore chore =_dbContext.Chores.SingleOrDefault(c => c.Id == int.Parse(id));
 

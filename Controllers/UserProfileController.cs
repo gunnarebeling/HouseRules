@@ -114,7 +114,13 @@ public class UserProfileController : ControllerBase
                 Id = c.Id,
                 Name = c.Name,
                 Difficulty = c.Difficulty,
-                ChoreFrequencyDays = c.ChoreFrequencyDays
+                ChoreFrequencyDays = c.ChoreFrequencyDays,
+                ChoreCompletions = c.choreCompletions.Select(cc => new ChoreCompletionForChoresDTO 
+                {
+                    Id = cc.Id,
+                    CompletedOn= cc.CompletedOn
+
+                }).ToList()
                 
 
             }).ToList(),
